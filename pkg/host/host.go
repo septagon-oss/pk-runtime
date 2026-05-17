@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"slices"
 	"strings"
 
 	"github.com/septagon-oss/pk-core/pkg/authz"
@@ -116,9 +117,9 @@ func (h *Host) Plan() *module.Plan {
 		return &module.Plan{}
 	}
 	return &module.Plan{
-		Modules:     append([]module.Composable(nil), h.plan.Modules...),
-		Providers:   append([]any(nil), h.plan.Providers...),
-		Invocations: append([]any(nil), h.plan.Invocations...),
+		Modules:     slices.Clone(h.plan.Modules),
+		Providers:   slices.Clone(h.plan.Providers),
+		Invocations: slices.Clone(h.plan.Invocations),
 	}
 }
 

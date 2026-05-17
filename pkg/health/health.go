@@ -8,9 +8,10 @@ package health
 // Convention: C-14 (file purpose declaration).
 
 import (
+	"cmp"
 	"context"
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 	"time"
 )
@@ -97,8 +98,8 @@ func NewRegistry(checks ...Check) (*Registry, error) {
 		seen[c.ID] = struct{}{}
 		normalized = append(normalized, c)
 	}
-	sort.SliceStable(normalized, func(i, j int) bool {
-		return normalized[i].ID < normalized[j].ID
+	slices.SortStableFunc(normalized, func(a, b Check) int {
+		return cmp.Compare(a.ID, b.ID)
 	})
 	return &Registry{checks: normalized}, nil
 }
@@ -108,7 +109,7 @@ func (r *Registry) Checks() []Check {
 	if r == nil {
 		return nil
 	}
-	return append([]Check(nil), r.checks...)
+	return slices.Clone(r.checks)
 }
 
 // CheckResult is the runtime result of one check.

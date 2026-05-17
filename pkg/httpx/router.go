@@ -8,11 +8,12 @@ package httpx
 // Convention: C-14 (file purpose declaration).
 
 import (
+	"cmp"
 	"context"
 	"errors"
 	"fmt"
 	"net/http"
-	"sort"
+	"slices"
 	"strings"
 
 	"github.com/septagon-oss/pk-core/pkg/authz"
@@ -134,12 +135,11 @@ func NewRouter(routes []Route, opts ...RouterOption) (*Router, error) {
 		seen[key] = struct{}{}
 		normalized = append(normalized, r)
 	}
-	sort.SliceStable(normalized, func(i, j int) bool {
-		return normalized[i].Method+" "+normalized[i].Pattern < normalized[j].Method+" "+normalized[j].Pattern
+	slices.SortStableFunc(normalized, func(a, b Route) int {
+		return cmp.Compare(a.Method+" "+a.Pattern, b.Method+" "+b.Pattern)
 	})
 
 	for _, route := range normalized {
-		route := route
 		handler := route.Handler
 		if route.Authz != nil {
 			handler = router.guard(route, *route.Authz, handler)
