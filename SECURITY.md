@@ -1,6 +1,6 @@
 # Security
 
-Report security issues privately to `hello@septagon.dev`.
+Please report security issues privately to `hello@septagon.dev`.
 
-Runtime guards must fail closed when authorization is configured but no
-evaluator is available.
+Do not open public issues for vulnerabilities, credential exposure, or bypasses
+in tenant isolation, authentication, authorization, audit, or module loading.

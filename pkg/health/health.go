@@ -20,10 +20,14 @@ import (
 type Status string
 
 const (
-	StatusOK       Status = "ok"
+	// StatusOK reports a fully healthy component.
+	StatusOK Status = "ok"
+	// StatusDegraded reports a component that is serving but impaired.
 	StatusDegraded Status = "degraded"
-	StatusDown     Status = "down"
-	StatusUnknown  Status = "unknown"
+	// StatusDown reports a component that is not serving.
+	StatusDown Status = "down"
+	// StatusUnknown reports a component whose health could not be determined.
+	StatusUnknown Status = "unknown"
 )
 
 // Result is returned by a health check.
