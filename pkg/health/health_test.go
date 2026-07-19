@@ -2,8 +2,9 @@ package health
 
 // health_test.go validates deterministic health snapshot aggregation.
 //
-// ADR: ADR-0029 (file purpose declaration).
-// Convention: C-14 (every Go file declares its purpose).
+// Validates: REQ-009.
+// Per: ADR-0029 (file purpose declaration).
+// Discipline: C-14.
 
 import (
 	"context"
@@ -80,5 +81,36 @@ func TestRegistrySnapshotAcceptsNilContext(t *testing.T) {
 	snapshot := registry.Snapshot(ctx)
 	if snapshot.Status != StatusOK {
 		t.Fatalf("snapshot.Status = %q, want %q", snapshot.Status, StatusOK)
+	}
+}
+
+func TestRegistrySnapshotDoesNotRunChecksAfterCancellation(t *testing.T) {
+	t.Parallel()
+
+	called := false
+	registry, err := NewRegistry(Check{
+		ID:       "database",
+		Critical: true,
+		Run: func(context.Context) (Result, error) {
+			called = true
+			return OK("unexpected"), nil
+		},
+	})
+	if err != nil {
+		t.Fatalf("NewRegistry() error = %v", err)
+	}
+
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	snapshot := registry.Snapshot(ctx)
+
+	if called {
+		t.Fatal("Snapshot invoked a health check after context cancellation")
+	}
+	if snapshot.Status != StatusDown {
+		t.Fatalf("snapshot.Status = %q, want %q", snapshot.Status, StatusDown)
+	}
+	if len(snapshot.Results) != 1 || snapshot.Results[0].Error != context.Canceled.Error() {
+		t.Fatalf("snapshot.Results = %#v; want context cancellation", snapshot.Results)
 	}
 }
