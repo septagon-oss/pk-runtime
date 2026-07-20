@@ -1,6 +1,9 @@
 // Package request provides typed request context helpers.
 package request
 
+// Implements: REQ-001.
+// Per: ADR-0009.
+// Discipline: C-14.
 // context.go owns request-scoped tenant and principal context values without
 // coupling runtime to an HTTP framework.
 //

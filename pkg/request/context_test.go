@@ -1,5 +1,8 @@
 package request
 
+// Validates: REQ-001.
+// Per: ADR-0009.
+// Discipline: C-14.
 // context_test.go validates typed request context helpers.
 //
 // ADR: ADR-0029 (file purpose declaration).

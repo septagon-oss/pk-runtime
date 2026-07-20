@@ -1,6 +1,9 @@
 // Package httpx provides small HTTP runtime contracts.
 package httpx
 
+// Implements: REQ-005.
+// Per: ADR-0028.
+// Discipline: C-14.
 // router.go owns route registration and fail-closed authorization guards for
 // the standard library HTTP runtime.
 //

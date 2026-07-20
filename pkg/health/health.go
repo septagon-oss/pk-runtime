@@ -1,6 +1,9 @@
 // Package health provides deterministic runtime health snapshots.
 package health
 
+// Implements: REQ-009.
+// Per: ADR-0005.
+// Discipline: C-14.
 // health.go owns provider-neutral health checks used by OSS and downstream
 // runtimes.
 //

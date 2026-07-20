@@ -1,5 +1,8 @@
 package host
 
+// Validates: REQ-016.
+// Per: ADR-0034.
+// Discipline: C-14.
 // host_test.go validates module composition and readiness serving for the OSS
 // runtime host.
 //

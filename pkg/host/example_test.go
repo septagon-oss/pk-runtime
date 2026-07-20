@@ -1,5 +1,8 @@
 package host_test
 
+// Validates: REQ-016.
+// Per: ADR-0034.
+// Discipline: C-14.
 // example_test.go provides runnable godoc examples for composing and serving an
 // OSS runtime host.
 //

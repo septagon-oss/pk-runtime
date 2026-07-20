@@ -1,6 +1,9 @@
 // Package host composes modules into a small HTTP-capable runtime host.
 package host
 
+// Implements: REQ-016.
+// Per: ADR-0034.
+// Discipline: C-14.
 // host.go owns the minimal app host contract for OSS PlatformKit runtimes.
 //
 // ADR: ADR-0017 (composition through dependency injection), ADR-0029 (file purpose declaration).

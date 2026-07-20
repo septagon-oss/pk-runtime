@@ -1,5 +1,8 @@
 package httpx
 
+// Validates: REQ-005.
+// Per: ADR-0028.
+// Discipline: C-14.
 // router_test.go validates route registration, authz guards, and request
 // context propagation for the OSS HTTP runtime.
 //
